@@ -106,7 +106,6 @@ class OpenAIChatCompletionsClient(BaseLLMClient):
                     if not chunk:
                         continue
                     stem = "data: "
-                    chunk = chunk[len(stem) :]
                     if chunk in [b"[DONE]", "[DONE]"]:
                         continue
 
@@ -121,7 +120,7 @@ class OpenAIChatCompletionsClient(BaseLLMClient):
                         error_response_code = data["error"]["code"]
                         raise RuntimeError(data["error"]["message"])
 
-                    delta = data["choices"][0]["delta"]
+                    delta = data["message"]
                     if delta.get("content", None):
                         (
                             current_tokens_received,
